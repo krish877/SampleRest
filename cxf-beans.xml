@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xmlns:httpj="http://cxf.apache.org/transports/http-jetty/configuration"
+	xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+         http://cxf.apache.org/jaxrs
+         http://cxf.apache.org/schemas/jaxrs.xsd
+         http://cxf.apache.org/transports/http-jetty/configuration
+         http://cxf.apache.org/schemas/configuration/http-jetty.xsd">
+
+	<jaxrs:server id="jettyServer" address="http://localhost:9191/">
+		<jaxrs:serviceBeans>
+			<ref bean="serviceBean" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+        <bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
+    </jaxrs:providers>
+	</jaxrs:server>
+	<bean id="serviceBean" class="com.sai.Service">
+		<property name="nameService" ref="nameService" />
+		<property name="personService" ref="personService" />
+	</bean>
+	<bean id="nameService" class="com.sai.NameService" />
+	<bean id="personService" class="com.sai.PersonService" />
+</beans>
