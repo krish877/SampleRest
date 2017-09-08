@@ -11,6 +11,10 @@ public Person(String name, String dateOfbirth, String mobile, String aadharNum) 
 	this.mobile = mobile;
 	this.aadharNum = aadharNum;
 }
+
+public Person(){
+	
+}
 private String aadharNum;
 public String getName() {
 	return name;

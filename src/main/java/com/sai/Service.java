@@ -2,21 +2,24 @@ package com.sai;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.annotation.XmlAccessorType;
+
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 
 @Path("/myapp")
+@CrossOriginResourceSharing(allowAllOrigins=true)
 public class Service {
 	private NameService nameService;
 	private PersonService personService;
+	private ContactService contactService;
 
-	@Produces({ "application/json" } )
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
 	@GET
 	@Path("/nameservice")
 	public String getName(@QueryParam("id") @DefaultValue("1") int id) {
@@ -25,18 +28,22 @@ public class Service {
 
 	@PUT
 	@Path("/nameservice")
-	public void addName(@FormParam("name") String name) {
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public void addName(String name) {
 		nameService.addName(name);
 	}
-	
-	@Produces({ "application/json" } )
+
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
 	@GET
 	@Path("/nameservice/listAll")
-	public String listAllNames(){
+	public String listAllNames() {
 		return nameService.listAllNames();
 	}
-	
-	@Produces({ "application/json" } )
+
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
 	@GET
 	@Path("/personservice")
 	public Person getPerson(@QueryParam("key") @DefaultValue("1") int id) {
@@ -45,30 +52,35 @@ public class Service {
 
 	@PUT
 	@Path("/personservice")
-	public Response addPerson(@FormParam("name") String name,
-			@FormParam("dateOfbirth") String dateOfbirth,
-			@FormParam("mobile") String mobile,
-			@FormParam("aadharNum") String aadharNum) {
-		Person peson=new Person(name, dateOfbirth, mobile, aadharNum);
-		personService.addName(peson);
-		return Response.status(200).entity("new person is added").build();
-		
-	}
-	
-	@PUT
-	@Path("/personservice/json")
-	@Consumes({ "application/json" } )
-	public Response addPersonJson(Person person) {
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public Response addPerson(Person person) {
 		personService.addName(person);
-		return Response.status(200).entity("new person is added").build();
-		
+		return Response.status(200).entity(person).build();
 	}
-	
-	@Produces({ "application/json" } )
+
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
 	@GET
 	@Path("/personservice/listAll")
-	public String listAllPersons(){
+	public String listAllPersons() {
 		return personService.listAllNames();
+	}
+	
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	@GET
+	@Path("/contactService")
+	public Contact getContact(@QueryParam("name") @DefaultValue("1") String name){
+		return contactService.getContact(name);
+	}
+
+	public ContactService getContactService() {
+		return contactService;
+	}
+
+	public void setContactService(ContactService contactService) {
+		this.contactService = contactService;
 	}
 
 	public NameService getNameService() {

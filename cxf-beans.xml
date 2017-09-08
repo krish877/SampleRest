@@ -21,7 +21,9 @@
 	<bean id="serviceBean" class="com.sai.Service">
 		<property name="nameService" ref="nameService" />
 		<property name="personService" ref="personService" />
+		<property name="contactService" ref="contactService" />
 	</bean>
 	<bean id="nameService" class="com.sai.NameService" />
 	<bean id="personService" class="com.sai.PersonService" />
+	<bean id="contactService" class="com.sai.ContactService" />
 </beans>
