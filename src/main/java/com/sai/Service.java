@@ -70,9 +70,17 @@ public class Service {
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	@GET
-	@Path("/contactService")
-	public Contact getContact(@QueryParam("name") @DefaultValue("1") String name){
+	@Path("/contactservice")
+	public String getContact(@QueryParam("name") @DefaultValue("1") String name){
 		return contactService.getContact(name);
+	}
+	
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	@GET
+	@Path("/contactservice/getAll")
+	public String getAllContacts(){
+		return contactService.getAllContacts();
 	}
 
 	public ContactService getContactService() {

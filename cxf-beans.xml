@@ -13,11 +13,18 @@
 	<jaxrs:server id="jettyServer" address="http://localhost:9191/">
 		<jaxrs:serviceBeans>
 			<ref bean="serviceBean" />
+			<!-- <ref bean="cors-server" /> -->
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
         <bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
+        <ref bean="cors-filter" />
     </jaxrs:providers>
 	</jaxrs:server>
+	
+	<bean id="cors-filter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
+	<!-- <bean id="cors-server" scope="prototype"
+          class="org.apache.cxf.systest.jaxrs.cors.AnnotatedCorsServer" /> -->
+	
 	<bean id="serviceBean" class="com.sai.Service">
 		<property name="nameService" ref="nameService" />
 		<property name="personService" ref="personService" />

@@ -13,8 +13,12 @@ public class ContactService {
 		}
 	}
 	
-	public Contact getContact(String name){
+	public String getContact(String name){
 		return MongoUtility.findContact(name);
+	}
+	
+	public String getAllContacts(){
+		return MongoUtility.findAll();
 	}
 
 }
